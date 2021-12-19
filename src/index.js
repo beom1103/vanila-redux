@@ -5,14 +5,21 @@ const minus = document.getElementById("minus")
 const number = document.querySelector("p")
 
 number.innerText = 0;
+
+//변수를 선언함으로써 더 안정성 있게!
+const ADD = "ADD"
+const MINUS = "MINUS"
+
 const countModifier = (count=0, action) => {
-    
-    if (action.type === "ADD") {
-        return count + 1;
-    } else if (action.type ==="MINUS") {
-        return count - 1;
-    } else {
-        return count;
+
+    switch(action.type) {
+        case ADD:
+            return count + 1;
+        case MINUS:
+            return count -1;
+        default:
+            return count;
+
     }
 };
 
@@ -29,11 +36,11 @@ const onChange = () => {
 countStore.subscribe(onChange);
 
 const handleAdd = () => {
-    countStore.dispatch({type:"ADD"})
+    countStore.dispatch({type:ADD})
 }
 
 const handleMinus = () => {
-    countStore.dispatch({type:"MINUS"})
+    countStore.dispatch({type:MINUS})
 }
 
 add.addEventListener("click", handleAdd)
