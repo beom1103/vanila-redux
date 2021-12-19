@@ -25,10 +25,17 @@ const reducer = (state = [], action) => {
     switch(action.type){
         // todo list를 추가
         case ADD_TODO:
-            return [{ text: action.text, id: Date.now() }, ...state];
+            const newToDoObj = { text: action.text, id: Date.now() };
+            console.log(action.id);
+            return [newToDoObj, ...state];
+            
         // todo list를 제거
         case DELETE_TODO:{
-            return[];
+        //삭제해야 할 toDO의 id가 없는 array를 반환
+        // 예를 들어 1, 2, 3, 4, 5가 있으면 deleteTodo의 id 값이 state의 id를 돌며 하나씩 대조하여 id값이 같은 것을 제외한 새로운 array를 반환하게 되면 toDo가 정상적으로 유지된다.
+            const cleaned = state.filter(toDo => toDo.id !== action.id);
+            console.log(action.id);
+            return cleaned;
         }
         default:
             return state
@@ -47,7 +54,7 @@ const dispatchAddToDo = text => {
   };
   
   const dispatchDeleteToDo = e => {
-    const id = e.target.parentNode.id;
+    const id = parseInt(e.target.parentNode.id);
     store.dispatch(deleteToDo(id));
   };
   
